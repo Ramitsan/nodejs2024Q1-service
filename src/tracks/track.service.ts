@@ -89,4 +89,12 @@ export class TracksService {
       }
     })
   }
+
+  removeAlbumId(albumId: string) {
+    tracks.forEach(track => {
+      if(albumId == track.albumId) {
+        track.albumId = null;
+      }
+    })
+  }
 }
