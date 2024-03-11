@@ -83,18 +83,18 @@ export class TracksService {
   }
 
   removeArtistId(artistId: string) {
-    tracks.forEach(track => {
-      if(artistId == track.artistId) {
+    tracks.forEach((track) => {
+      if (artistId == track.artistId) {
         track.artistId = null;
       }
-    })
+    });
   }
 
   removeAlbumId(albumId: string) {
-    tracks.forEach(track => {
-      if(albumId == track.albumId) {
+    tracks.forEach((track) => {
+      if (albumId == track.albumId) {
         track.albumId = null;
       }
-    })
+    });
   }
 }

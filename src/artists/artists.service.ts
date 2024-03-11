@@ -14,7 +14,10 @@ const artists: Array<Artist> = [];
 
 @Injectable()
 export class ArtistsService {
-  constructor(private tracksService: TracksService, private albumsService: AlbumsService) {}
+  constructor(
+    private tracksService: TracksService,
+    private albumsService: AlbumsService,
+  ) {}
   getArtists() {
     return artists.map((artist) => {
       return artist;
@@ -49,7 +52,7 @@ export class ArtistsService {
     if (!validate(id)) {
       throw new BadRequestException();
     }
-    if (!body || !body.name || typeof body.grammy !== 'boolean' ) {
+    if (!body || !body.name || typeof body.grammy !== 'boolean') {
       throw new BadRequestException();
     }
     const artistIndex = artists.findIndex((artist) => artist.id == id);

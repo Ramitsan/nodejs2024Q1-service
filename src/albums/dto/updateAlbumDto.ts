@@ -3,4 +3,3 @@ export interface UpdateAlbumDto {
   year: number;
   artistId: string | null; // refers to Artist
 }
-

@@ -33,14 +33,20 @@ export class AlbumsService {
 
   createAlbum(body: CreateAlbumDto) {
     const validArtistId = body?.artistId == null || validate(body?.artistId);
-    if (!body || !body.name || typeof body.name !== 'string' || !body.year || !validArtistId) {
+    if (
+      !body ||
+      !body.name ||
+      typeof body.name !== 'string' ||
+      !body.year ||
+      !validArtistId
+    ) {
       throw new BadRequestException();
     }
     const album: Album = {
       id: v4(),
       name: body.name,
       year: body.year,
-      artistId: body.artistId 
+      artistId: body.artistId,
     };
     albums.push(album);
     return album;
@@ -51,7 +57,13 @@ export class AlbumsService {
       throw new BadRequestException();
     }
     const validArtistId = body?.artistId == null || validate(body?.artistId);
-    if (!body || !body.name || typeof body.name !== 'string' || !body.year || !validArtistId) {
+    if (
+      !body ||
+      !body.name ||
+      typeof body.name !== 'string' ||
+      !body.year ||
+      !validArtistId
+    ) {
       throw new BadRequestException();
     }
     const albumIndex = albums.findIndex((album) => album.id == id);
@@ -80,12 +92,10 @@ export class AlbumsService {
   }
 
   removeArtistId(artistId: string) {
-    albums.forEach(album => {
-      if(artistId == album.artistId) {
+    albums.forEach((album) => {
+      if (artistId == album.artistId) {
         album.artistId = null;
       }
-    })
+    });
   }
-
 }
-
