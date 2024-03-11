@@ -81,4 +81,12 @@ export class TracksService {
     tracks.splice(trackIndex, 1);
     return {};
   }
+
+  removeArtistId(artistId: string) {
+    tracks.forEach(track => {
+      if(artistId == track.artistId) {
+        track.artistId = null;
+      }
+    })
+  }
 }

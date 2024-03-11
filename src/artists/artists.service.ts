@@ -7,11 +7,13 @@ import { CreateArtistDto } from './dto/createArtistDto';
 import { UpdateArtistDto } from './dto/updateArtistDto';
 import { Artist } from './artist';
 import { v4, validate } from 'uuid';
+import { TracksService } from 'src/tracks/track.service';
 
 const artists: Array<Artist> = [];
 
 @Injectable()
 export class ArtistsService {
+  constructor(private tracksService: TracksService) {}
   getArtists() {
     return artists.map((artist) => {
       return artist;
@@ -69,6 +71,7 @@ export class ArtistsService {
       throw new NotFoundException();
     }
     artists.splice(artistIndex, 1);
+    this.tracksService.removeArtistId(id);
     return {};
   }
 }
