@@ -1,7 +1,15 @@
 import { Controller, HttpCode } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Body, Param } from '@nestjs/common/decorators/http/route-params.decorator';
-import { Delete, Get, Post, Put } from '@nestjs/common/decorators/http/request-mapping.decorator';
+import {
+  Body,
+  Param,
+} from '@nestjs/common/decorators/http/route-params.decorator';
+import {
+  Delete,
+  Get,
+  Post,
+  Put,
+} from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { CreateUserDto } from './dto/createUserDto';
 import { UpdatePasswordDto } from './dto/updatePasswordDto';
 
@@ -14,7 +22,7 @@ export class UsersController {
   getUsers() {
     return this.usersService.getUsers();
   }
-  
+
   @Get(':id')
   @HttpCode(200)
   getUser(@Param('id') id: string) {
@@ -23,13 +31,13 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  createUser(@Body() body: CreateUserDto ) {
+  createUser(@Body() body: CreateUserDto) {
     return this.usersService.createUser(body);
   }
 
   @Put(':id')
   @HttpCode(200)
-  updateUser(@Param('id') id: string, @Body() body: UpdatePasswordDto ) {
+  updateUser(@Param('id') id: string, @Body() body: UpdatePasswordDto) {
     return this.usersService.updateUser(id, body);
   }
 
