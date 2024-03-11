@@ -78,5 +78,14 @@ export class AlbumsService {
     this.tracksService.removeAlbumId(id);
     return {};
   }
+
+  removeArtistId(artistId: string) {
+    albums.forEach(album => {
+      if(artistId == album.artistId) {
+        album.artistId = null;
+      }
+    })
+  }
+
 }
 

@@ -8,12 +8,13 @@ import { UpdateArtistDto } from './dto/updateArtistDto';
 import { Artist } from './artist';
 import { v4, validate } from 'uuid';
 import { TracksService } from 'src/tracks/track.service';
+import { AlbumsService } from 'src/albums/albums.service';
 
 const artists: Array<Artist> = [];
 
 @Injectable()
 export class ArtistsService {
-  constructor(private tracksService: TracksService) {}
+  constructor(private tracksService: TracksService, private albumsService: AlbumsService) {}
   getArtists() {
     return artists.map((artist) => {
       return artist;
@@ -72,6 +73,7 @@ export class ArtistsService {
     }
     artists.splice(artistIndex, 1);
     this.tracksService.removeArtistId(id);
+    this.albumsService.removeArtistId(id);
     return {};
   }
 }
