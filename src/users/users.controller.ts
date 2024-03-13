@@ -1,0 +1,49 @@
+import { Controller, HttpCode } from '@nestjs/common';
+import { UsersService } from './users.service';
+import {
+  Body,
+  Param,
+} from '@nestjs/common/decorators/http/route-params.decorator';
+import {
+  Delete,
+  Get,
+  Post,
+  Put,
+} from '@nestjs/common/decorators/http/request-mapping.decorator';
+import { CreateUserDto } from './dto/createUserDto';
+import { UpdatePasswordDto } from './dto/updatePasswordDto';
+
+@Controller('user')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  @HttpCode(200)
+  getUsers() {
+    return this.usersService.getUsers();
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  getUser(@Param('id') id: string) {
+    return this.usersService.getUser(id);
+  }
+
+  @Post()
+  @HttpCode(201)
+  createUser(@Body() body: CreateUserDto) {
+    return this.usersService.createUser(body);
+  }
+
+  @Put(':id')
+  @HttpCode(200)
+  updateUser(@Param('id') id: string, @Body() body: UpdatePasswordDto) {
+    return this.usersService.updateUser(id, body);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  deleteUser(@Param('id') id: string) {
+    return this.usersService.deleteUser(id);
+  }
+}

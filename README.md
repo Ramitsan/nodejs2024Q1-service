@@ -1,5 +1,11 @@
 # Home Library Service
 
+## Made with
+<img src="https://github.com/Ramitsan/nodejs2024Q1-service/assets/45296707/676b1b4f-2761-47b4-b76a-d7b55b4d6b3a" width="100" height="100">
+<img src="https://github.com/Ramitsan/nodejs2024Q1-service/assets/45296707/0df1df01-a82e-46a7-81dc-8c3997585053" width="200" height="120">
+<img src="https://github.com/Ramitsan/nodejs2024Q1-service/assets/45296707/2891412f-6f90-4e78-b3e3-225e53a6ea21" width="100" height="100">
+
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
@@ -8,7 +14,19 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone git@github.com:Ramitsan/nodejs2024Q1-service.git
+```
+
+## Navigate to the project directory:
+
+```
+cd nodejs2024Q1-service/
+```
+
+## Switch to develop branch:
+
+```
+git checkout develop
 ```
 
 ## Installing NPM modules
@@ -17,10 +35,21 @@ git clone {repository URL}
 npm install
 ```
 
+## Create a .env file in the root directory and define the port. 
+- Default port is 4000:
+  
+   **PORT=4000**
+
 ## Running application
 
 ```
-npm start
+npm run start 
+```
+
+or running application in dev watch mode
+
+```
+npm run start:dev
 ```
 
 After starting the app on port (4000 as default) you can open
