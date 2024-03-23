@@ -10,6 +10,7 @@ import { Album } from 'src/albums/album';
 import { Artist } from 'src/artists/artist';
 import { Track } from 'src/tracks/track';
 import { validate } from 'uuid';
+import { ArtistsDBService } from 'src/artists/artist-db.service';
 
 const favorites: {
   tracks: Array<string>;
@@ -25,11 +26,11 @@ const favorites: {
 export class FavoritesService {
   constructor(
     private tracksService: TracksService,
-    private artistsService: ArtistsService,
+    private artistsService: ArtistsDBService,
     private albumsService: AlbumsService,
   ) {}
-  findAll() {
-    console.log(favorites);
+  async findAll() {
+    // console.log(favorites);
     const tracksMap: Record<string, Track> = {};
     this.tracksService.getTracks().forEach((track) => {
       tracksMap[track.id] = track;
@@ -43,15 +44,16 @@ export class FavoritesService {
     const albums = favorites.albums.map((albumId) => albumsMap[albumId]);
 
     const artistsMap: Record<string, Artist> = {};
-    this.artistsService.getArtists().forEach((artist) => {
+    const artists = await this.artistsService.getArtists();
+    artists.forEach((artist) => {
       artistsMap[artist.id] = artist;
     });
-    const artists = favorites.artists.map((artistId) => artistsMap[artistId]);
-    console.log(tracks, albums, artists);
+    const favoritesArtists = favorites.artists.map((artistId) => artistsMap[artistId]);
+    // console.log(tracks, albums, artists);
     return {
       tracks: tracks.filter((it) => it),
       albums: albums.filter((it) => it),
-      artists: artists.filter((it) => it),
+      artists: favoritesArtists.filter((it) => it),
     };
   }
 
@@ -93,12 +95,12 @@ export class FavoritesService {
     }
   }
 
-  addArtist(id: string) {
+  async addArtist(id: string) {
     if (!validate(id)) {
       throw new BadRequestException();
     }
     try {
-      this.artistsService.getArtist(id);
+      await this.artistsService.getArtist(id);
     } catch (err) {
       throw new UnprocessableEntityException();
     }
