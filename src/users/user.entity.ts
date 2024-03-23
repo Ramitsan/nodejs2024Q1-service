@@ -11,13 +11,13 @@ export class UserEntity {
     @Column({type: 'varchar'})
     password: string
 
-    @Column({type: 'integer'})
+    @Column({type: 'float8'})
     version: number
 
-    @Column({type: 'integer'})
+    @Column({type: 'float8'})
     createdAt: number
 
-    @Column({type: 'integer'})
+    @Column({type: 'float8'})
     updatedAt: number  
 }
 

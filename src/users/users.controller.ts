@@ -18,7 +18,7 @@ import { UsersDBService } from './users-db.service';
 export class UsersController {
   usersService: UsersService | UsersDBService;
   constructor(private readonly usersLocalService: UsersService, private readonly usersDBService: UsersDBService) {
-    this.usersService = usersLocalService;
+    this.usersService = usersDBService;
   }
 
   @Get()
@@ -36,18 +36,18 @@ export class UsersController {
   @Post()
   @HttpCode(201)
   createUser(@Body() body: CreateUserDto) {
-    return this.usersLocalService.createUser(body);
+    return this.usersService.createUser(body);
   }
 
   @Put(':id')
   @HttpCode(200)
   updateUser(@Param('id') id: string, @Body() body: UpdatePasswordDto) {
-    return this.usersLocalService.updateUser(id, body);
+    return this.usersService.updateUser(id, body);
   }
 
   @Delete(':id')
   @HttpCode(204)
   deleteUser(@Param('id') id: string) {
-    return this.usersLocalService.deleteUser(id);
+    return this.usersService.deleteUser(id);
   }
 }
