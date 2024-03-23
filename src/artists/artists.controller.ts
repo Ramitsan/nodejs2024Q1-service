@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { CreateArtistDto } from './dto/createArtistDto';
 import { UpdateArtistDto } from './dto/updateArtistDto';
-import { ArtistsDBService } from './artist-db.service';
+import { ArtistsDBService } from './artists-db.service';
 
 @Controller('artist')
 export class ArtistsController {

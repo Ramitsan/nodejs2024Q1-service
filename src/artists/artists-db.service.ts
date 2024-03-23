@@ -11,13 +11,14 @@ import { TracksService } from 'src/tracks/track.service';
 import { AlbumsService } from 'src/albums/albums.service';
 import { DataSource } from 'typeorm';
 import { ArtistEntity } from './artist.entity';
+import { AlbumsDBService } from 'src/albums/albums-db.service';
 
 
 @Injectable()
 export class ArtistsDBService {
   constructor(
     private tracksService: TracksService,
-    private albumsService: AlbumsService,
+    private albumsService: AlbumsDBService,
     private dataSource: DataSource
   ) {}
   async getArtists() {
@@ -82,7 +83,7 @@ export class ArtistsDBService {
       throw new NotFoundException();
     }
     this.tracksService.removeArtistId(id);
-    this.albumsService.removeArtistId(id);
+    await this.albumsService.removeArtistId(id);
     return {};
   }
 }
