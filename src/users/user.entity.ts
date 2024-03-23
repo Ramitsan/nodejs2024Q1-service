@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn, Column } from "typeorm"
 
 @Entity({name: 'user'})
 export class UserEntity {
-    @PrimaryColumn({type: 'uuid'})
+    @PrimaryColumn({type: 'uuid', unique: true})
     id: string
 
     @Column({type: 'varchar'})
