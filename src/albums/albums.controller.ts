@@ -12,10 +12,15 @@ import {
 } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { CreateAlbumDto } from './dto/createAlbumDto';
 import { UpdateAlbumDto } from './dto/updateAlbumDto';
+import { AlbumsDBService } from './albums-db.service';
 
 @Controller('album')
 export class AlbumsController {
-  constructor(private readonly albumsService: AlbumsService) {}
+  albumsService: AlbumsService | AlbumsDBService;
+  
+  constructor(private readonly albumsLocalService: AlbumsService, private readonly albumsDBService: AlbumsDBService) {
+    this.albumsService = albumsDBService;
+  } 
 
   @Get()
   @HttpCode(200)

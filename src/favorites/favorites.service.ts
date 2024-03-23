@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { AlbumsService } from 'src/albums/albums.service';
@@ -10,7 +11,8 @@ import { Album } from 'src/albums/album';
 import { Artist } from 'src/artists/artist';
 import { Track } from 'src/tracks/track';
 import { validate } from 'uuid';
-import { ArtistsDBService } from 'src/artists/artist-db.service';
+import { ArtistsDBService } from 'src/artists/artists-db.service';
+import { AlbumsDBService } from 'src/albums/albums-db.service';
 
 const favorites: {
   tracks: Array<string>;
@@ -27,7 +29,7 @@ export class FavoritesService {
   constructor(
     private tracksService: TracksService,
     private artistsService: ArtistsDBService,
-    private albumsService: AlbumsService,
+    private albumsService: AlbumsDBService,
   ) {}
   async findAll() {
     // console.log(favorites);
@@ -38,10 +40,11 @@ export class FavoritesService {
     const tracks = favorites.tracks.map((trackId) => tracksMap[trackId]);
 
     const albumsMap: Record<string, Album> = {};
-    this.albumsService.getAlbums().forEach((album) => {
+    const albums = await this.albumsService.getAlbums();
+    albums.forEach((album) => {
       albumsMap[album.id] = album;
     });
-    const albums = favorites.albums.map((albumId) => albumsMap[albumId]);
+    const favoritesAlbums = favorites.albums.map((albumId) => albumsMap[albumId]);
 
     const artistsMap: Record<string, Artist> = {};
     const artists = await this.artistsService.getArtists();
@@ -52,7 +55,7 @@ export class FavoritesService {
     // console.log(tracks, albums, artists);
     return {
       tracks: tracks.filter((it) => it),
-      albums: albums.filter((it) => it),
+      albums: favoritesAlbums.filter((it) => it),
       artists: favoritesArtists.filter((it) => it),
     };
   }
@@ -76,14 +79,14 @@ export class FavoritesService {
     }
   }
 
-  addAlbum(id: string) {
+  async addAlbum(id: string) {
     if (!validate(id)) {
       throw new BadRequestException();
     }
     try {
-      this.albumsService.getAlbum(id);
-    } catch (err) {
-      throw new UnprocessableEntityException();
+      await this.albumsService.getAlbum(id);
+    } catch (err) {      
+      throw new UnprocessableEntityException();     
     }
     favorites.albums.push(id);
   }
