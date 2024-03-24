@@ -1,20 +1,19 @@
-import { Entity, PrimaryColumn, Column } from "typeorm"
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity({ name: 'track' })
 export class TrackEntity {
   @PrimaryColumn({ type: 'uuid', unique: true })
-  id: string
+  id: string;
 
   @Column({ type: 'varchar' })
-  name: string
+  name: string;
 
   @Column({ type: 'varchar', nullable: true })
-  artistId: string | null
+  artistId: string | null;
 
   @Column({ type: 'varchar', nullable: true })
-  albumId: string | null
+  albumId: string | null;
 
   @Column({ type: 'float8' })
-  duration: number
+  duration: number;
 }
-

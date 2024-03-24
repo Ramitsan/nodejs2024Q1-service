@@ -20,7 +20,7 @@ export class TracksController {
 
   constructor(
     private readonly tracksLocalService: TracksService,
-    private readonly tracksDBService: TracksDBService
+    private readonly tracksDBService: TracksDBService,
   ) {}
 
   @Get()

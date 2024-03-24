@@ -1,12 +1,8 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { AlbumsService } from 'src/albums/albums.service';
-import { ArtistsService } from 'src/artists/artists.service';
-import { TracksService } from 'src/tracks/track.service';
 import { Album } from 'src/albums/album';
 import { Artist } from 'src/artists/artist';
 import { Track } from 'src/tracks/track';
@@ -39,21 +35,27 @@ export class FavoritesService {
     tracks.forEach((track) => {
       tracksMap[track.id] = track;
     });
-    const favoritesTracks = favorites.tracks.map((trackId) => tracksMap[trackId]);
+    const favoritesTracks = favorites.tracks.map(
+      (trackId) => tracksMap[trackId],
+    );
 
     const albumsMap: Record<string, Album> = {};
     const albums = await this.albumsService.getAlbums();
     albums.forEach((album) => {
       albumsMap[album.id] = album;
     });
-    const favoritesAlbums = favorites.albums.map((albumId) => albumsMap[albumId]);
+    const favoritesAlbums = favorites.albums.map(
+      (albumId) => albumsMap[albumId],
+    );
 
     const artistsMap: Record<string, Artist> = {};
     const artists = await this.artistsService.getArtists();
     artists.forEach((artist) => {
       artistsMap[artist.id] = artist;
     });
-    const favoritesArtists = favorites.artists.map((artistId) => artistsMap[artistId]);
+    const favoritesArtists = favorites.artists.map(
+      (artistId) => artistsMap[artistId],
+    );
     // console.log(tracks, albums, artists);
     return {
       tracks: favoritesTracks.filter((it) => it),
@@ -87,8 +89,8 @@ export class FavoritesService {
     }
     try {
       await this.albumsService.getAlbum(id);
-    } catch (err) {      
-      throw new UnprocessableEntityException();     
+    } catch (err) {
+      throw new UnprocessableEntityException();
     }
     favorites.albums.push(id);
   }

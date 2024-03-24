@@ -17,10 +17,13 @@ import { AlbumsDBService } from './albums-db.service';
 @Controller('album')
 export class AlbumsController {
   albumsService: AlbumsService | AlbumsDBService;
-  
-  constructor(private readonly albumsLocalService: AlbumsService, private readonly albumsDBService: AlbumsDBService) {
+
+  constructor(
+    private readonly albumsLocalService: AlbumsService,
+    private readonly albumsDBService: AlbumsDBService,
+  ) {
     this.albumsService = albumsDBService;
-  } 
+  }
 
   @Get()
   @HttpCode(200)

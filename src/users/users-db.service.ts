@@ -16,8 +16,8 @@ export class UsersDBService {
   constructor(private dataSource: DataSource) {}
   async getUsers() {
     return this.dataSource.manager.find(UserEntity, {
-      select: ['id', 'login', 'version', 'createdAt', 'updatedAt']
-    })
+      select: ['id', 'login', 'version', 'createdAt', 'updatedAt'],
+    });
   }
 
   async getUser(id: string) {
@@ -25,13 +25,13 @@ export class UsersDBService {
       throw new BadRequestException();
     }
     const user = await this.dataSource.manager.findOne(UserEntity, {
-      select: ['id', 'login', 'version', 'createdAt', 'updatedAt'], 
-      where: {id}
-    })
+      select: ['id', 'login', 'version', 'createdAt', 'updatedAt'],
+      where: { id },
+    });
     if (!user) {
       throw new NotFoundException();
     }
-   return user;
+    return user;
   }
 
   async createUser(body: CreateUserDto) {
@@ -50,7 +50,7 @@ export class UsersDBService {
     const user = this.dataSource.manager.create(UserEntity, userData);
     await this.dataSource.manager.save(UserEntity, user);
     const { id: _id, login, version, createdAt, updatedAt } = user;
-    return { id: _id, login, version, createdAt, updatedAt }; 
+    return { id: _id, login, version, createdAt, updatedAt };
   }
 
   async updateUser(id: string, body: UpdatePasswordDto) {
@@ -61,10 +61,10 @@ export class UsersDBService {
       throw new BadRequestException();
     }
     const user = await this.dataSource.manager.findOne(UserEntity, {
-      select: ['id', 'login', 'password', 'version', 'createdAt', 'updatedAt'], 
-      where: {id}
-    })
-   
+      select: ['id', 'login', 'password', 'version', 'createdAt', 'updatedAt'],
+      where: { id },
+    });
+
     if (!user) {
       throw new NotFoundException();
     }
@@ -85,9 +85,9 @@ export class UsersDBService {
       throw new BadRequestException();
     }
     const deleteResult = await this.dataSource.manager.delete(UserEntity, {
-      id
-    })
-    if(deleteResult.affected == 0) {
+      id,
+    });
+    if (deleteResult.affected == 0) {
       throw new NotFoundException();
     }
     return {};

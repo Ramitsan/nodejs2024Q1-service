@@ -17,7 +17,10 @@ import { UsersDBService } from './users-db.service';
 @Controller('user')
 export class UsersController {
   usersService: UsersService | UsersDBService;
-  constructor(private readonly usersLocalService: UsersService, private readonly usersDBService: UsersDBService) {
+  constructor(
+    private readonly usersLocalService: UsersService,
+    private readonly usersDBService: UsersDBService,
+  ) {
     this.usersService = usersDBService;
   }
 

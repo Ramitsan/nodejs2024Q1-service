@@ -11,15 +11,14 @@ import { TracksService } from 'src/tracks/track.service';
 import { DataSource } from 'typeorm';
 import { AlbumEntity } from './album.entity';
 
-
 @Injectable()
 export class AlbumsDBService {
   constructor(
-    private tracksService: TracksService, 
-    private dataSource: DataSource
+    private tracksService: TracksService,
+    private dataSource: DataSource,
   ) {}
   async getAlbums() {
-    return this.dataSource.manager.find(AlbumEntity, {})
+    return this.dataSource.manager.find(AlbumEntity, {});
   }
 
   async getAlbum(id: string) {
@@ -27,7 +26,7 @@ export class AlbumsDBService {
       throw new BadRequestException();
     }
     const album = await this.dataSource.manager.findOne(AlbumEntity, {
-      where: {id}
+      where: { id },
     });
 
     if (!album) {
@@ -73,9 +72,9 @@ export class AlbumsDBService {
     ) {
       throw new BadRequestException();
     }
-    const album = await this.dataSource.manager.findOne(AlbumEntity, { 
-      where: {id}
-    })
+    const album = await this.dataSource.manager.findOne(AlbumEntity, {
+      where: { id },
+    });
     if (!album) {
       throw new NotFoundException();
     }
@@ -90,16 +89,22 @@ export class AlbumsDBService {
     if (!validate(id)) {
       throw new BadRequestException();
     }
-    const deleteResult = await this.dataSource.manager.delete(AlbumEntity, {id})
-    if(deleteResult.affected == 0) {
+    const deleteResult = await this.dataSource.manager.delete(AlbumEntity, {
+      id,
+    });
+    if (deleteResult.affected == 0) {
       throw new NotFoundException();
     }
-    
+
     this.tracksService.removeAlbumId(id);
     return {};
   }
 
   async removeArtistId(artistId: string) {
-    await this.dataSource.manager.update(AlbumEntity, {artistId}, {artistId: null})
+    await this.dataSource.manager.update(
+      AlbumEntity,
+      { artistId },
+      { artistId: null },
+    );
   }
 }

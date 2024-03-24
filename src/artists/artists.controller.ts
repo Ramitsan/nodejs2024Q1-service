@@ -18,7 +18,10 @@ import { ArtistsDBService } from './artists-db.service';
 export class ArtistsController {
   artistsService: ArtistsService | ArtistsDBService;
 
-  constructor(private readonly artistsLocalService: ArtistsService, private readonly artistsDBService: ArtistsDBService) {
+  constructor(
+    private readonly artistsLocalService: ArtistsService,
+    private readonly artistsDBService: ArtistsDBService,
+  ) {
     this.artistsService = artistsDBService;
   }
 

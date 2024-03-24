@@ -1,13 +1,13 @@
-import { Entity, PrimaryColumn, Column } from "typeorm"
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Entity({name: 'artist'})
+@Entity({ name: 'artist' })
 export class ArtistEntity {
-    @PrimaryColumn({type: 'uuid', unique: true})
-    id: string
+  @PrimaryColumn({ type: 'uuid', unique: true })
+  id: string;
 
-    @Column({type: 'varchar'})
-    name: string
+  @Column({ type: 'varchar' })
+  name: string;
 
-    @Column({type: 'bool'})
-    grammy: boolean
+  @Column({ type: 'bool' })
+  grammy: boolean;
 }
