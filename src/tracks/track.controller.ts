@@ -12,10 +12,16 @@ import {
 } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { CreateTrackDto } from './dto/createTrackDto';
 import { UpdateTrackDto } from './dto/updateTrackDto';
+import { TracksDBService } from './tracks-db.service';
 
 @Controller('track')
 export class TracksController {
-  constructor(private readonly tracksService: TracksService) {}
+  tracksService: TracksService | TracksDBService;
+
+  constructor(
+    private readonly tracksLocalService: TracksService,
+    private readonly tracksDBService: TracksDBService
+  ) {}
 
   @Get()
   @HttpCode(200)

@@ -13,6 +13,7 @@ import { Track } from 'src/tracks/track';
 import { validate } from 'uuid';
 import { ArtistsDBService } from 'src/artists/artists-db.service';
 import { AlbumsDBService } from 'src/albums/albums-db.service';
+import { TracksDBService } from 'src/tracks/tracks-db.service';
 
 const favorites: {
   tracks: Array<string>;
@@ -27,17 +28,18 @@ const favorites: {
 @Injectable()
 export class FavoritesService {
   constructor(
-    private tracksService: TracksService,
+    private tracksService: TracksDBService,
     private artistsService: ArtistsDBService,
     private albumsService: AlbumsDBService,
   ) {}
   async findAll() {
     // console.log(favorites);
     const tracksMap: Record<string, Track> = {};
-    this.tracksService.getTracks().forEach((track) => {
+    const tracks = await this.tracksService.getTracks();
+    tracks.forEach((track) => {
       tracksMap[track.id] = track;
     });
-    const tracks = favorites.tracks.map((trackId) => tracksMap[trackId]);
+    const favoritesTracks = favorites.tracks.map((trackId) => tracksMap[trackId]);
 
     const albumsMap: Record<string, Album> = {};
     const albums = await this.albumsService.getAlbums();
@@ -54,18 +56,18 @@ export class FavoritesService {
     const favoritesArtists = favorites.artists.map((artistId) => artistsMap[artistId]);
     // console.log(tracks, albums, artists);
     return {
-      tracks: tracks.filter((it) => it),
+      tracks: favoritesTracks.filter((it) => it),
       albums: favoritesAlbums.filter((it) => it),
       artists: favoritesArtists.filter((it) => it),
     };
   }
 
-  addTrack(id: string) {
+  async addTrack(id: string) {
     if (!validate(id)) {
       throw new BadRequestException();
     }
     try {
-      this.tracksService.getTrack(id);
+      await this.tracksService.getTrack(id);
     } catch (err) {
       throw new UnprocessableEntityException();
     }

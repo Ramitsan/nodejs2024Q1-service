@@ -82,7 +82,7 @@ export class ArtistsDBService {
     if(deleteResult.affected == 0) {
       throw new NotFoundException();
     }
-    this.tracksService.removeArtistId(id);
+    await this.tracksService.removeArtistId(id);
     await this.albumsService.removeArtistId(id);
     return {};
   }
