@@ -7,15 +7,15 @@ import { CreateArtistDto } from './dto/createArtistDto';
 import { UpdateArtistDto } from './dto/updateArtistDto';
 import { Artist } from './artist';
 import { v4, validate } from 'uuid';
-import { TracksService } from 'src/tracks/track.service';
 import { DataSource } from 'typeorm';
 import { ArtistEntity } from './artist.entity';
 import { AlbumsDBService } from 'src/albums/albums-db.service';
+import { TracksDBService } from 'src/tracks/tracks-db.service';
 
 @Injectable()
 export class ArtistsDBService {
   constructor(
-    private tracksService: TracksService,
+    private tracksService: TracksDBService,
     private albumsService: AlbumsDBService,
     private dataSource: DataSource,
   ) {}

@@ -29,7 +29,6 @@ export class FavoritesService {
     private albumsService: AlbumsDBService,
   ) {}
   async findAll() {
-    // console.log(favorites);
     const tracksMap: Record<string, Track> = {};
     const tracks = await this.tracksService.getTracks();
     tracks.forEach((track) => {
@@ -56,7 +55,6 @@ export class FavoritesService {
     const favoritesArtists = favorites.artists.map(
       (artistId) => artistsMap[artistId],
     );
-    // console.log(tracks, albums, artists);
     return {
       tracks: favoritesTracks.filter((it) => it),
       albums: favoritesAlbums.filter((it) => it),

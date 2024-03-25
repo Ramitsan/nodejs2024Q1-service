@@ -21,7 +21,9 @@ export class TracksController {
   constructor(
     private readonly tracksLocalService: TracksService,
     private readonly tracksDBService: TracksDBService,
-  ) {}
+  ) {
+    this.tracksService = tracksDBService;
+  }
 
   @Get()
   @HttpCode(200)

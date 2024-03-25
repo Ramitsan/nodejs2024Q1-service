@@ -7,14 +7,14 @@ import { CreateAlbumDto } from './dto/createAlbumDto';
 import { UpdateAlbumDto } from './dto/updateAlbumDto';
 import { Album } from './album';
 import { v4, validate } from 'uuid';
-import { TracksService } from 'src/tracks/track.service';
 import { DataSource } from 'typeorm';
 import { AlbumEntity } from './album.entity';
+import { TracksDBService } from 'src/tracks/tracks-db.service';
 
 @Injectable()
 export class AlbumsDBService {
   constructor(
-    private tracksService: TracksService,
+    private tracksService: TracksDBService,
     private dataSource: DataSource,
   ) {}
   async getAlbums() {
@@ -96,7 +96,7 @@ export class AlbumsDBService {
       throw new NotFoundException();
     }
 
-    this.tracksService.removeAlbumId(id);
+    await this.tracksService.removeAlbumId(id);
     return {};
   }
 
