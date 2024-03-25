@@ -16,13 +16,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AlbumsModule,
     FavoritesModule,
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
+      type: 'postgres',      
+      host: process.env.DB_HOST || '127.0.0.1',
       port: 5432,
       username: 'testuser',
       password: 'testpass',
       database: 'test_db_name',
-
       entities: ['dist/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
       synchronize: true,
