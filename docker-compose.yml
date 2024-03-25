@@ -3,6 +3,7 @@ version: "3.8"
 services:
   app:
     container_name: app
+    image: ramitsan/home_library_service:app
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,6 +24,7 @@ services:
 
   postgres:
     container_name: postgres
+    image: ramitsan/home_library_service:postgres
     build:
       context: .
       dockerfile: bd/Dockerfile
